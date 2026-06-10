@@ -7,11 +7,16 @@ A simple FastAPI project to demonstrate how to build an API server for an AI app
 **Create a virtual environment**
 
 ```bash
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 ```
 
 **Install dependencies**
+
+if possible
+```bash
+pip install --upgrade pip
+```
 
 ```bash
 pip install -r requirements.txt
