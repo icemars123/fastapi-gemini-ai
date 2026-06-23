@@ -8,13 +8,36 @@ class Gemini(AIPlatform):
         self.api_key = api_key
         self.system_prompt = system_prompt
         genai.configure(api_key=self.api_key)
+        self.model_name = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+        self.model = genai.GenerativeModel(self.model_name)
 
-        # See more models at: https://ai.google.dev/gemini-api/docs/models
-        self.model = genai.GenerativeModel("gemini-2.5-flash-preview-05-20")
+    def _fallback_model_name(self) -> str | None:
+        """Pick the first model that supports generateContent."""
+        try:
+            for model in genai.list_models():
+                if "generateContent" in getattr(model, "supported_generation_methods", []):
+                    return model.name.replace("models/", "")
+        except Exception:
+            return None
+        return None
 
     def chat(self, prompt: str) -> str:
         if self.system_prompt:
             prompt = f"{self.system_prompt}\n\n{prompt}"
 
-        response = self.model.generate_content(prompt)
+        try:
+            response = self.model.generate_content(prompt)
+        except Exception as exc:
+            message = str(exc)
+            if "is not found" not in message and "not supported for generateContent" not in message:
+                raise
+
+            fallback = self._fallback_model_name()
+            if not fallback:
+                raise
+
+            self.model_name = fallback
+            self.model = genai.GenerativeModel(self.model_name)
+            response = self.model.generate_content(prompt)
+
         return response.text
