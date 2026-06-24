@@ -23,12 +23,12 @@ def load_system_prompt():
 
 
 system_prompt = load_system_prompt()
-gemini_api_key = os.getenv("GEMINI_API_KEY")
+gemini__api__key = os.getenv("GEMINI__API__KEY")
 
-if not gemini_api_key:
-    raise ValueError("GEMINI_API_KEY environment variable not set.")
+if not gemini__api__key:
+    raise ValueError("GEMINI__API__KEY environment variable not set.")
 
-ai_platform = Gemini(api_key=gemini_api_key, system_prompt=system_prompt)
+ai_platform = Gemini(api_key=gemini__api__key, system_prompt=system_prompt)
 
 
 # --- Pydantic Models ---

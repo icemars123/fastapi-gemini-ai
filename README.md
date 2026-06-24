@@ -27,17 +27,17 @@ pip install -r requirements.txt
 Set your Gemini API key as an environment variable in your terminal. You can get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
 ```bash
-export GEMINI_API_KEY="your_gemini_api_key"
+export GEMINI__API__KEY="your_gemini__api__key"
 ```
 
 For Windows users:
 
 ```batch
 :: In Command Prompt
-set GEMINI_API_KEY="your_gemini_api_key"
+set GEMINI__API__KEY="your_gemini__api__key"
 
 :: In PowerShell
-$env:GEMINI_API_KEY="your_gemini_api_key"
+$env:GEMINI__API__KEY="your_gemini__api__key"
 ```
 
 The application will load this key from your environment.
